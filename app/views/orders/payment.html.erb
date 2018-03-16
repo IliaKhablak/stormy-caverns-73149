@@ -1,0 +1,18 @@
+<div id="dropin-container"></div>
+  <button id="submit-button" class="waves-effect waves-light btn" style="margin: 20px auto;display:block;">Pay</button>
+      
+<input style="display: none;" id="check" value="false"></p>
+  <script>
+    var button = document.querySelector('#submit-button');
+    braintree.dropin.create({
+      authorization: '<%=@token%>',
+      container: '#dropin-container'
+    }, function (createErr, instance) {
+      button.addEventListener('click', function () {
+        instance.requestPaymentMethod(function (err, payload) {
+          // Submit payload.nonce to your server
+          $(location).attr('href', "http://0.0.0.0:3000/create2/"+<%=@order.id%>+"");
+        });
+      });
+    });
+  </script>

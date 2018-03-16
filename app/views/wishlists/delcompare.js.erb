@@ -1,0 +1,5 @@
+$('#comp2_<%=@b%>').remove();
+<% if @a.compare.size == 3 || !@a.compare.include?(@b)%>
+	$('.comp_btn').text('compare');
+	$('.comp_btn').removeClass('disabled');
+<%end%>

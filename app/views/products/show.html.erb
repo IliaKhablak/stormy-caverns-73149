@@ -1,0 +1,140 @@
+<div class="conteiner-show" style="margin-top: 50px;">
+  <% if current_user.admin %>
+    <%= link_to 'Edit', edit_product_path(@product), class: 'waves-effect waves-light btn bla', style: 'float:right;width:200px;'%> 
+  <% else %>
+    <div class="rate1" style="width: 140px;float: left;">
+      <% a1 = 1 %>
+      <% a2 = @product.rating.inject(0.0) { |sum, el| sum + el } / @product.rating.size %>
+      <p id="rate2" bla="<%= a2%>" bla1="<%=@product.rate_user.include?(current_user.id) %>"></p>
+      <% a3 = 1 %>
+      <% 5.times do %>
+        <% if @product.rate_user.include?(current_user.id)%> 
+          <% if a1 <= a2 %>
+            <i class="material-icons star">star</i>
+          <% else %>
+            <i class="material-icons star">star_border</i>
+          <% end %> 
+        <% else %>
+          <% if a1 <= a2 %>
+            <%= link_to( {:controller => "products", :action => "rate", :product_id => @product.id, :rating => a1 }, method: :post, remote: true, class: 'rate') do%>
+              <i class="material-icons star">star</i>
+            <% end %>
+          <% else %>
+            <%= link_to( {:controller => "products", :action => "rate", :product_id => @product.id, :rating => a1 }, method: :post, remote: true, class: 'rate') do%>
+                <i class="material-icons star">star_border</i>
+            <% end %>
+          <% end %>
+        <%end%>
+        <% a1 = a1+1 %>
+      <% end %>
+      <p id="rate3" style="text-align: center;">Have rated: <%=@product.rating.size %></p>
+    </div>
+    <%= link_to({:controller => "buckets", :action => "addtobucket", :product_id => @product.id }, method: :post, remote: true, class: "waves-effect waves-light btn add_to", style: "float:right; margin: 0px 10px;", id: "addtobucket"+@product.id.to_s) do%><i class="material-icons">add_shopping_cart</i><%end%>
+    <% if @wish.present? && @wish.product_id.include?(@product.id)%>
+      <%= link_to({:controller => "wishlists", :action => "deletewishlist", :product_id => @product.id }, method: :post, class: "waves-effect waves-light btn", remote: true, style: "float:right;margin: 0px 10px;", id: "deletewishlist"+@product.id.to_s, :data => {:confirm => 'are you sure?'}) do%><i class="material-icons">favorite</i><%end%>
+    <% else %>
+      <%= link_to({:controller => "wishlists", :action => "addtowishlist", :product_id => @product.id, :number => 0}, method: :post, remote: true, style: "float:right;margin: 0px 10px;", class: "waves-effect waves-light btn", id: "addtowishlist"+@product.id.to_s) do%><i class="material-icons">favorite_border</i><%end%>
+    <%end%>
+    <% if @wish.present? %>
+      <% if @wish.compare.size < 4%>
+        <% if @wish.compare.include?(@product.id) %>
+          <%= link_to 'allready there', {:controller => "wishlists", :action => "compare", :product_id => @product.id, :number => 0}, method: :post, remote: true, class: "waves-effect waves-light btn comp_btn disabled", style: 'margin: 0px 40px;'%>
+        <% else %>
+          <%= link_to 'compare', {:controller => "wishlists", :action => "compare", :product_id => @product.id, :number => 0}, method: :post, remote: true, class: "waves-effect waves-light btn comp_btn", style: 'margin: 0px 40px;'%>
+        <%end%>
+      <% else %>
+        <%= link_to 'Thats enough', {:controller => "wishlists", :action => "compare", :product_id => @product.id, :number => 0}, method: :post, remote: true, class: "waves-effect waves-light btn comp_btn disabled", style: 'margin: 0px 40px;'%>
+      <% end %>
+    <%else%>
+      <%= link_to 'compare', {:controller => "wishlists", :action => "compare", :product_id => @product.id, :number => 0}, method: :post, remote: true, class: "waves-effect waves-light btn comp_btn", style: 'margin: 0px 40px;'%>
+    <%end%>
+<% end %>
+<h1 style="text-align: center;" id="link-to-comp">
+  <%= @product.title %>
+</h1>
+<hr class="my-4">
+<div class="row">
+<div class="product-body col s5">
+  <% @product.images.each do |image| %>
+    <%= image_tag image.thumb.url, style: "width: 50px;height: 50px;", data: {zoom_image: image.url}, class: 'zoom1'%>
+  <% end %><br>
+  <p>
+    <strong>Description:</strong>
+    <%= @product.description %>
+  </p>
+  <p>
+    <strong>Category:</strong>
+    <%= @product.category %>
+  </p>
+  <p>
+    <strong>Price:</strong>
+    <%= @product.price %>
+  </p>
+  <p>
+    <strong>Stock:</strong>
+    <% if @product.stock > 0 %>
+      In stock. <%=@product.stock%> left 
+    <% else %>
+      Out of stock
+    <% end %>
+  </p>
+  <% if current_user.admin %>
+    <p>
+      <strong>visited:</strong>
+      <%= @product.statistic %>
+    </p>
+  <% end %>
+</div>
+<div class="product-comment col s6 offset-s1">
+  <h3>Comments</h3>
+  <% @comments.each do |comment| %>
+    <div style="margin-bottom: 5px;padding: 10px;" id="comment_<%=comment.id%>"
+      class="com_place">
+      <strong><%= comment.user_name %>&nbsp;<%=comment.created_at.strftime('%FT%R')%></strong>
+      <% if current_user.email == comment.user_name || current_user.admin %>
+      <%= link_to 'Delete', comment_path(comment), method: :delete, remote: :true, data: { confirm: 'Are you sure?' }%>
+      <% end %>
+      <p><%= comment.body %></p>
+    </div>
+  <% end %><br>
+  <p>Leave your awesome comment:</p>
+  <%= render partial: 'comments/form', locals: { comment: @comment } %>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function () {
+    $(".add_to").on('ajax:success', function(){
+      alert("This product was added to bucket");
+    });
+    $(".zoom1").ezPlus();
+          $('.rate').mouseenter(function(){
+        $(this).prevAll().children().text('star');
+        $(this).children().text('star');
+      });
+      $('.rate').mouseleave(function(){
+        $(this).prevAll().children().text('star_border');
+        $(this).children().text('star_border');
+      });
+
+      $('.rate1').mouseenter(function(){
+        if ($('#rate2').attr('bla1') == 'false'){
+        $('.rate').children().text("star_border");
+      };
+      });
+      $('.rate1').mouseleave(function(){
+        
+        if ($('#rate2').attr('bla1') == 'false'){
+        var a = 1;
+        $('.star').each(function(){
+          if (a <= $("#rate2").attr("bla")){
+            $(this).text('star');
+          }else{
+            $(this).text('star_border');
+          };
+          a = a+1;
+        });
+      };
+      });
+  });
+</script>

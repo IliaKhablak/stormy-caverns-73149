@@ -1,0 +1,6 @@
+$('.order_manage').append("<div id='adinf'><h3>Order information:</h3><p>Order id:&nbsp;<%=@a.id%></p><p>Products:&nbsp;<%=@a.product_id%></p><p>Shipment adress:&nbsp;<%=@a.adress%></p></div>");
+<% if @a.complit%>
+	$('#adinf').append('<p>Status:&nbsp;finished</p>');
+<% else %>
+	$('#adinf').append('<p>Status:&nbsp;in progress</p>');
+<% end%>

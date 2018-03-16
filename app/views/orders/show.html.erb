@@ -1,0 +1,28 @@
+
+<div class="conteiner-order" style="margin: 100px 50px;">
+  <p>
+    <strong>User:</strong>
+    <%= @order.user_id %>
+  </p>
+
+  <p>
+    <strong>Total price:</strong>
+    <%= @order.price %>
+  </p>
+
+  <p>
+    <strong>Products:</strong>
+      <% @product.each do |x| %>
+      	<%=link_to(x) do%><%= x.title %><%end%>&nbsp;
+      <% end %>
+  </p>
+
+  <p>
+    <strong>Shipment adress:</strong>
+    <%= @order.adress %>
+  </p>
+
+  <% if @order.complit? %>
+  	<p> Delivered </p>
+  	<% end %>
+</div>

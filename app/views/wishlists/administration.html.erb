@@ -1,0 +1,18 @@
+<div style="margin: 20px;"> 
+    <%= link_to 'New Product', new_product_path, class: "waves-effect waves-light btn", style: 'display:block;margin: 30px auto;'%>
+	<div class="order_manage" style="margin:20px;">
+		<div class="row">
+			<%= form_with url: '/adm_search', method: :get, class: "col s12" do |form| %>
+		      <div class="row">
+		        <div class="input-field col s6">
+		          <i class="material-icons prefix" >search</i>
+		          <%= form.text_field :number, id: :icon_prefix, class: "validate"%>
+		          <label for="icon_prefix">Find order here</label>
+		          <%= form.submit "Search", style: 'display:none;'%>
+		      	</div>
+		  	  </div>
+		  	<%end%>
+        </div>
+
+	</div>
+</div>

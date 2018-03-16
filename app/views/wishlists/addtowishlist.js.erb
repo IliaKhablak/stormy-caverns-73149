@@ -1,0 +1,2 @@
+$("#addtowishlist<%=@a%>").remove();
+$('#addtobucket<%=@a%>').after("<a id='deletewishlist<%=@a%>' style='margin: 0 10px;' class='wishbtn waves-effect waves-light btn' data-confirm='are you sure?' data-remote='true' rel='nofollow' data-method='post' href='/deletewishlist?product_id=<%=@a%>'><i class='material-icons'>favorite</i></a>");

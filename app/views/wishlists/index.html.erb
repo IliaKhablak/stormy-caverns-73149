@@ -1,0 +1,31 @@
+
+<div style="margin: 20px;">
+  <h1>Your wishlist</h1>
+  <hr class="my-4">
+  <% if !@wishlist.present? %>
+    <h3> Your wishlist is empty </h3>
+  <% else %>
+  <table>
+    <thead>
+      <tr>
+        <th>Products</th>
+        <th>Price</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% b = 0 %>
+      <% @wishlist.each do |bucket| %>
+      
+        <tr>
+          
+          <td><%= link_to "#{bucket.title}", product_url(bucket) %></td> 
+          <td><%= bucket.price %></td> 
+          <td><%= link_to 'delete', {:controller => "wishlists", :action => "deletewishlist", :product_id => bucket.id, number: 1}, method: :post, remote: true, :data => {:confirm => 'are you sure?'} %></td>
+        </tr>
+        <% end %>
+    </tbody>
+  </table>
+  <% end %>
+</div>

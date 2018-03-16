@@ -1,0 +1,53 @@
+
+<div class="conteiner-bucket">
+  <% if @buckets.present? %>
+    <%= link_to 'finnish your order', new_order_url, class: "waves-effect waves-light btn", style: "float:right;margin-left:30px;" %>
+  <% end %>
+  <h1>Your bucket</h1>
+  <hr class="my-4">
+  <% if !@buckets.present? %>
+    <h3> Your bucket is empty </h3>
+  <% else %>
+  <div class="bucket-table col s8 offset-s2" >
+    <table>
+      <thead>
+        <tr>
+          <th>Products</th>
+          <th>Quantity</th>
+          <th>Unit price</th>
+          <th>Amount</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% b = 0 %>
+        <% @buckets.each do |bucket| %>
+          <tr>
+            <td><%= link_to "#{bucket.title}", product_url(bucket) %></td> 
+            <% z = 0 %>
+            <% @a.product_id.each do |x| %>
+              <% if x[0] == bucket.id %>
+                <td>
+                  <% if x[1] > 1 %>
+                    <%= link_to '-', {:controller => "buckets", :action => "deletebucket", :product_id => bucket.id, :number => 1 }, method: :post, remote: true%>
+                  <% else %>
+                    &nbsp;
+                  <% end %>
+                  <%= x[1] %>
+                  <%= link_to '+', {:controller => "buckets", :action => "addtobucket", :product_id => bucket.id, :number => 1}, method: :post, remote: true%>
+                  </td>
+                <% z = x[1] %>
+              <% end %>
+            <% end %>
+            <td><%= bucket.price %></td> 
+            <td><%= bucket.price * z %></td> 
+            <td><%= link_to 'delete', {:controller => "buckets", :action => "deletebucket", :product_id => bucket.id, :number => z }, method: :post, remote: true, :data => {:confirm => 'are you sure?'} %></td>
+            <% b = b+(bucket.price*z) %>
+          </tr>
+        <% end %>
+        <td>Total price: &nbsp; <%=b%></td>
+      </tbody>
+    </table>
+  </div>
+ <% end %>
+</div>

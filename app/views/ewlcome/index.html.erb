@@ -1,0 +1,12 @@
+
+
+
+<div style="margin: 100px auto;text-align: center;max-width: 700px;">
+  <h1 class="display-4">Welcome to the test app</h1>
+  <p class="lead">Do you wanna try to be admin, or customer? Choose it in registration page</p>
+  <hr class="my-4">
+  <p class="lead", style="text-align: center;">
+	<%= link_to "Log in/sign up", new_user_session_path, class: "bwaves-effect waves-light btn" %>
+	<%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path, class: "waves-effect waves-light btn" %>
+  </p>
+</div>

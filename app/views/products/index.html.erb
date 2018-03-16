@@ -1,0 +1,54 @@
+
+<div class="container">
+  <div class="bla">
+    <%= form_tag(products_path, method: :get) do %>
+      <%= text_field_tag :term,  params[:term] %>
+      <%= button_tag(type: "submit", class: "waves-effect waves-light btn search_line") do %>
+        <i class="material-icons">search</i>
+      <% end %> 
+    <% end %>
+  </div>
+
+  <div class="row">
+    <% @products.each do |product| %>
+      <div class="col s6 m4" id="prod_card_<%=product.id%>">
+        <div class="card">
+          <div class="card-image">
+            <%= link_to(product) do %>
+              <%= image_tag(product.images[0].url) if product.images? %>
+            <% end %>
+            <span class="card-title" style="color: black;"><%= product.title %></span>
+          </div>
+          <div class="card-content">
+            <p><%=product.description%></p>
+            <p>Price:&nbsp;<%=product.price%></p>
+          </div>
+          <div class="card-action">
+            <% if current_user.admin %>
+              <%= link_to "edit", edit_product_path(product), class: 'waves-effect waves-light btn'%>
+              <%= link_to(product, method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'waves-effect waves-light btn', style: 'float:right;') do%><i class="material-icons">delete</i><%end%>
+            <% else %>
+              <%= link_to({:controller => "buckets", :action => "addtobucket", :product_id => product.id, :number => 0 }, method: :post, remote: true, class: "addtobucket waves-effect waves-light btn", id: "addtobucket"+product.id.to_s) do%><i class="material-icons">add_shopping_cart</i><%end%>
+              <% if @wish.present? && @wish.product_id.include?(product.id)%>
+                <%= link_to({:controller => "wishlists", :action => "deletewishlist", :product_id => product.id }, method: :post, remote: true, id: "deletewishlist"+product.id.to_s, :data => {:confirm => 'are you sure?'} , style: 'margin: 0 10px;', class: 'waves-effect waves-light btn wishbtn') do%><i class="material-icons">favorite</i><%end%>
+              <% else %>
+                <%= link_to({:controller => "wishlists", :action => "addtowishlist", :product_id => product.id, :number => 0}, method: :post, remote: true, id: "addtowishlist"+product.id.to_s, style: 'margin: 0 10px;', class: 'waves-effect waves-light btn wishbtn') do%><i class="material-icons">favorite_border</i><%end%>
+              <%end%>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+<script type="text/javascript" integrity="">
+ $('.dropdown-button').dropdown();
+  $(document).ready(function () {
+
+    $(".addtobucket").on('ajax:success', function(){
+      alert("This product was added to bucket");
+    });
+  });
+</script>
