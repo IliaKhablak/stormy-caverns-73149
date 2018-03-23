@@ -108,7 +108,7 @@ class OrdersController < ApplicationController
       c = Bucket.find_by(user_id: current_user.id)
       c.destroy
       @user = User.find(current_user.id)
-      ApplicationMailer.sample_email(@user, @order).deliver_now
+      OrderJob.perform_later(@user, @order)
       respond_to do |format|
           format.html { redirect_to root_path, notice: 'Order was successfully finished.' }
           format.json { render :show, status: :ok, location: @order }

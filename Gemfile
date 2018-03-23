@@ -29,7 +29,7 @@ gem "figaro"
 gem "braintree", "~> 2.84.0"
 gem 'materialize-sass', '~> 1.0.0.alpha4'
 gem 'material_icons' 
-
+gem "sidekiq"
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
