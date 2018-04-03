@@ -8,9 +8,15 @@ class BucketsController < ApplicationController
       @buckets = []
       @a = Bucket.find_by(user_id: current_user.id)
       @a.product_id.each do |b|
-        c = Product.find(b[0])
-        @buckets << c
+        if Product.exists?(id: b[0])
+          c = Product.find(b[0])
+          @buckets << c
+        else
+          b = nil
+        end
       end
+      @a.product_id = @a.product_id.compact
+      @a.save
       @buckets
       @a
     end

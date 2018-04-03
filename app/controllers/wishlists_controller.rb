@@ -7,9 +7,15 @@ class WishlistsController < ApplicationController
 		if Wishlist.exists?(user_id: current_user.id)
 			a = Wishlist.find_by(user_id: current_user.id)
 			a.product_id.each do |x|
-				b = Product.find(x)
-				@wishlist << b
+				if Product.exists?(id: x)
+					b = Product.find(x)
+					@wishlist << b
+				else
+					x = nil
+				end
 			end
+			a.product_id = a.product_id.compact
+			a.save
 		end
 	end
 
