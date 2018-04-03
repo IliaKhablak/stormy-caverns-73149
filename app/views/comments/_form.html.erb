@@ -1,15 +1,18 @@
-<%= form_with(model: comment, id: 'comment_form') do |form| %>
-  <% if comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
-      <ul>
-        <% comment.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+<%= form_with(model: Comment.new, id: 'comment_form') do |form| %>
+  <% if comment %>
+    <% if comment.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+        <ul>
+          <% comment.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
   <% end %>
-  <%= form.text_area :body, id: :comment_body%>
-  <%= form.hidden_field :product_id %>
-  <%= form.submit 'Just do it', class: "waves-effect waves-light btn"%>
+  <%end%>
+  <%= form.text_area :body, id: :comment_body, class: 'materialize-textarea'%>
+  <%= form.hidden_field :product_id, value: @product.id %>
+  <div class="actions">
+  <%= form.submit 'Just do it', class: "waves-effect waves-light btn"%></div>
 <% end %>

@@ -29,10 +29,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     @comment.user_name = current_user.email
     @comment.save
-    respond_to do |f|
-      f.html {}
-      f.js
-    end
+    @comments = Comment.where(product_id: params[:product_id])
   end
 
   # PATCH/PUT /comments/1
@@ -68,6 +65,6 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:user_name, :body, :product_id)
+      params.require(:comment).permit(:body, :product_id)
     end
 end

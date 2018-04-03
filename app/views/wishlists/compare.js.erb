@@ -14,5 +14,5 @@
 	$('.comp_btn').text('allready there');
 	$('.comp_btn').addClass('disabled');
 <%end%>
-$('#comp1').append("<div class='col s2 offset-s<%=b%> card-comp' id='comp2_<%=@compare.id%>'><div class='card pink accent-4' style='width: 150px;'><div class='card-content white-text'><a href='/product/<%=@compare.id%>'><span class='card-title'><%=@compare.title%></span></a><p><%=@compare.description%></p><p class='card-text'>Price:&nbsp;<%=@compare.price%></p></div><div class='card-action'><a data-remote='true' rel='nofollow' data-method='post' href='/delcompare?number=0&amp;product_id=<%=@compare.id%>'>close</a></div></div></div>");
-       
+console.log('hi');
+$('#comp1').append("<div class='col s2 offset-s<%=b%> card-comp ui-draggable ui-draggable-handle' id='comp2_<%=@compare.id%>'><div class='card pink accent-4' style='width: 150px;'><div class='card-content white-text'><a href='/product/<%=@compare.id%>'><span class='card-title'><%=@compare.title%></span></a><p><%=@compare.description%></p><p class='card-text'>Price:&nbsp;<%=@compare.price%></p></div><div class='card-action'><a data-remote='true' rel='nofollow' data-method='post' href='/delcompare?number=0&amp;product_id=<%=@compare.id%>'>close</a></div></div></div>");

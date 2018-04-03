@@ -70,20 +70,19 @@ class WishlistsController < ApplicationController
 				@a.save
 				@a
 				@compare = Product.find(params['product_id'].to_i)
-				respond_to do |f|
-			      f.html { redirect_to request.referrer }
-			      f.js
-			  	end
+				
+			       redirect_to request.referrer
+			      
+			  	
 			end
 		else
 			@a = Wishlist.new(user_id: current_user.id)
 			@a.compare << params['product_id'].to_i
 	      	@a.save
 	      	@compare = Product.find(params['product_id'].to_i)
-			respond_to do |f|
-		      f.html { redirect_to request.referrer }
-		      f.js
-		  	end
+			
+		      redirect_to request.referrer 
+		    
 	    end
 	end
 

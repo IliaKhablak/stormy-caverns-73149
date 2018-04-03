@@ -1,2 +1,3 @@
+
 $('.com_place').last().after("<div style='margin-bottom: 5px;padding: 10px;' id='comment_<%=@comment.id%>' class='com_place'><strong><%= @comment.user_name %>&nbsp;<%=@comment.created_at.strftime('%FT%R')%></strong><% if current_user.email == @comment.user_name || current_user.admin %><a data-confirm='Are you sure?' data-remote='true' rel='nofollow' data-method='delete' href='/comments/<%=@comment.id%>'>Delete</a><% end %><p><%= @comment.body %></p></div>");
 $('#comment_body').val('');

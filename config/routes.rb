@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resources :products
   post 'checkout' => 'orders#checkout'
   get 'payment/:id' => 'orders#payment'
-  get 'create2/:id' => 'orders#create2'
+  get 'payment/create2/:id' => 'orders#create2'
   get 'administration' => 'wishlists#administration'
   get 'adm_search' => 'wishlists#adm_search'
   

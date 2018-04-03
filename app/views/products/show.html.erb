@@ -1,6 +1,6 @@
 <div class="conteiner-show" style="margin-top: 50px;">
   <% if current_user.admin %>
-    <%= link_to 'Edit', edit_product_path(@product), class: 'waves-effect waves-light btn bla', style: 'float:right;width:200px;'%> 
+    <%= link_to 'Edit', edit_product_path(@product), class: 'waves-effect waves-light btn bla', style: 'float:right;width:200px;', data: {turbolinks: false}%> 
   <% else %>
     <div class="rate1" style="width: 140px;float: left;">
       <% a1 = 1 %>
@@ -56,7 +56,7 @@
 <div class="row">
 <div class="product-body col s5">
   <% @product.images.each do |image| %>
-    <%= image_tag image.thumb.url, style: "width: 50px;height: 50px;", data: {zoom_image: image.url}, class: 'zoom1'%>
+    <%= image_tag image, style: "width: 50px;height: 50px;", data: {zoom_image: image}, class: 'zoom1'%>
   <% end %><br>
   <p>
     <strong>Description:</strong>
@@ -83,10 +83,11 @@
       <strong>visited:</strong>
       <%= @product.statistic %>
     </p>
+    <br>
   <% end %>
 </div>
 <div class="product-comment col s6 offset-s1">
-  <h3>Comments</h3>
+  <h3 class="com_place">Comments</h3>
   <% @comments.each do |comment| %>
     <div style="margin-bottom: 5px;padding: 10px;" id="comment_<%=comment.id%>"
       class="com_place">
@@ -98,15 +99,22 @@
     </div>
   <% end %><br>
   <p>Leave your awesome comment:</p>
-  <%= render partial: 'comments/form', locals: { comment: @comment } %>
+  <%= render 'comments/form',  comment: @comment  %>
   </div>
 </div>
 </div>
+
 <script type="text/javascript">
+  
+   // $('.chip').chips();
   $(document).ready(function () {
     $(".add_to").on('ajax:success', function(){
       alert("This product was added to bucket");
     });
+    $(document).ready(function(){
+       
+        $('.card-comp').draggable();
+      })
     $(".zoom1").ezPlus();
           $('.rate').mouseenter(function(){
         $(this).prevAll().children().text('star');

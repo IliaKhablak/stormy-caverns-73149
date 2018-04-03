@@ -17,8 +17,6 @@ gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 gem 'devise'
-gem 'carrierwave', '~> 1.0'
-gem "mini_magick"
 gem "fog-aws"
 gem "omniauth-google-oauth2", "~> 0.2.1"
 gem 'omniauth-facebook'
@@ -30,6 +28,10 @@ gem "braintree", "~> 2.84.0"
 gem 'materialize-sass', '~> 1.0.0.alpha4'
 gem 'material_icons' 
 gem "sidekiq"
+gem 'aws-sdk'
+gem "jquery-fileupload-rails"
+gem 'jquery-ui-rails'
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
