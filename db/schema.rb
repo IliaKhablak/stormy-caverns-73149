@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180313033955) do
+ActiveRecord::Schema.define(version: 20180331102019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,14 @@ ActiveRecord::Schema.define(version: 20180313033955) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "images", force: :cascade do |t|
+    t.integer "product_id"
+    t.string "avatar"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "avatar_processing", default: false, null: false
+  end
+
   create_table "orders", force: :cascade do |t|
     t.integer "user_id"
     t.boolean "complit", default: false
@@ -46,6 +54,16 @@ ActiveRecord::Schema.define(version: 20180313033955) do
     t.integer "product_id", default: [], array: true
   end
 
+  create_table "pictures", force: :cascade do |t|
+    t.integer "product_id"
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -53,13 +71,12 @@ ActiveRecord::Schema.define(version: 20180313033955) do
     t.datetime "updated_at", null: false
     t.string "category"
     t.string "like", default: [], array: true
-    t.json "images"
     t.integer "price", default: 0
     t.integer "rating", default: [], null: false, array: true
     t.integer "rate_user", default: [], null: false, array: true
-    t.string "avatar"
     t.integer "stock", default: 0, null: false
     t.integer "statistic", default: 0, null: false
+    t.string "images", default: [], array: true
   end
 
   create_table "rating_caches", force: :cascade do |t|

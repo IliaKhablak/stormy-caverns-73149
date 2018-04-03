@@ -6,7 +6,15 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
-
+  # config.paperclip_defaults = {
+  #   storage: :s3, 
+  #   s3_credentials: {
+  #     access_key_id: ENV['aws_id'],
+  #     secret_access_key: ENV['aws_secret'],
+  #     bucket: 'enotikbucket'
+  #   },
+  #   s3_region: "ap-southeast-1"
+  # }
 
   # Do not eager load code on boot.
   config.eager_load = false
@@ -78,5 +86,6 @@ Rails.application.configure do
   #   :password => 'Stanley1905'
   # }
   
-  
+  config.serve_static_assets = true
+  # Paperclip.options[:command_path] = "/usr/bin/"
 end
